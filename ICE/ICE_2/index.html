@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Sample Canvas Color</title>
+	<style type="text/css" />
+	#canvas-container {
+		width: 100%;
+		height: 100%;
+		text-align: center;	
+	}
+
+	canvas {
+		display: inline;
+		outline: 1px solid black;
+	}
+
+	</style>
+	<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+</head>
+<body>
+<div id="canvas-container">
+	<canvas id="clock" width="800" height="800">
+		Your browser does not support the canvas element.
+	</canvas>
+</div>
+<script>
+	/*
+		NOTE: right now only the second hand operates correctly. 
+	*/
+	var canvas, context;
+	var theDate = new Date();
+
+	// grab the audio files too
+	var tick_sound = new Audio('tick.mp3');
+	var tock_sound = new Audio('tock.mp3');
+	var pat = true;
+
+	$(document).ready(function (){
+		canvas  = $("#clock");
+		context = canvas[0].getContext("2d");
+		setInterval(drawScene, 1000); // redraw the scene every second.
+	});
+	
+	// main draw function
+	function drawScene() {
+		
+		if(pat){
+			console.log('tick');
+			tick_sound.play();
+			pat = false;
+		} else {
+			console.log('tock');
+			tock_sound.play();
+			pat = true;
+		}
+
+
+		clear(); // clears out the canvas
+		context.save(); // save current context
+		drawBackground(); // draws the static elements of the clock
+		drawClockFace(); // draws the clock face components
+	}
+
+	function drawClockFace() {
+		var date    = new Date(); // get current time
+		var minutes = date.getMinutes();
+		var second  = date.getSeconds();
+		var hours   = date.getHours() > 12 ? date.getHours()-12 : date.getHours() ;
+		var minute  = minutes+second / 60;
+		
+		drawSecondHand(second);
+		drawMinuteHand(minute);
+		drawHourHand(hours);
+	}
+
+	function drawBackground(){
+		// make a circle
+		context.strokeStyle = "#cccccc";
+		context.fillStyle = "#8f9094";
+		context.lineWidth = 30;
+		context.beginPath();
+		var x          = 400;
+		var y          = 400;
+		var r          = 375; 
+		var startAngle = 0*Math.PI;
+		var endAngle   = 2*Math.PI;
+		context.arc( x, y, r, startAngle, endAngle );
+		context.stroke();
+		context.fill();
+
+		// make the clock face
+		context.fillStyle = "white";
+		context.beginPath();
+		x          = 400;
+		y          = 400;
+		r          = 360; 
+		startAngle = 0*Math.PI;
+		endAngle   = 2*Math.PI;
+		context.arc( x, y, r, startAngle, endAngle );
+		context.fill();
+
+
+		// create the clockface
+		var ang, sang, cang, startx, starty, endx, endy;
+		
+		for( var i=0; i<60; i++ ){
+			ang  = Math.PI/30*i;
+			sang = Math.sin(ang) * 2.9;
+			cang = Math.cos(ang) * 2.9;
+
+			// mod / 5 == 0 then draw hour indicator
+			if( i % 15 == 0 ) {
+				context.lineWidth = 15;
+				startx = sang * 95 + 400;
+				starty = cang * -95 + 400;
+				endx   = sang * 120 + 400;
+				endy   = cang * -120 + 400;
+			}
+			else{
+				context.lineWidth = 7.5;
+				startx = sang * 110 + 400;
+				starty = cang * 110 + 400;
+				endx   = sang * 120 + 400;
+				endy   = cang * 120 + 400;
+			}
+			context.beginPath();
+			context.moveTo(startx,starty);
+			context.lineTo(endx,endy);
+			context.stroke();
+		}
+	}
+
+	function clear(){
+		context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+	}
+
+
+	function drawSecondHand(second) {
+		console.log('second: ' + second);
+		var radianAngle = ( second / 60 ) * ( Math.PI*2 ) + 10; // get the radian angle
+		context.save();
+		context.strokeStyle = "red";
+		context.translate(400,400);
+		context.rotate(radianAngle);
+		context.moveTo(250,250);
+		context.lineTo(0,0);
+		context.lineWidth = 5;
+		context.stroke();
+		context.restore();
+	}
+
+	function drawMinuteHand(minute) {
+		console.log('minute: ' + minute);
+		var radianAngle = ( minute / 60 ) * ( Math.PI*2 ); // get the radian angle
+		context.save();
+		context.strokeStyle = "black";
+		context.translate(400,400);
+		context.rotate(radianAngle);
+		context.moveTo(250,250);
+		context.lineTo(0,0);
+		context.lineWidth = 10;
+		context.stroke();
+		context.restore();
+		
+	}
+
+	function drawHourHand(hour) {
+		console.log('hour: ' + hour);
+		var radianAngle = ( hour ) * ( Math.PI*2 ); // get the radian angle
+		context.save();
+		context.strokeStyle = "black";
+		context.translate(400,400);
+		context.rotate(radianAngle);
+		context.moveTo(250,250);
+		context.lineTo(0,0);
+		context.lineWidth = 10;
+		context.stroke();
+		context.restore();
+	}
+
+</script>
+</body>
+</html>

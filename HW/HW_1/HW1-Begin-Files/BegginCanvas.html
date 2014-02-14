@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Canvas House</title>
+	<style type="text/css">
+	body{
+		background: #dddddd;
+ 	}
+
+	#canvas{
+		background: #ffffff;
+		margin-left: 10px;
+		margin-top: 10px;
+		box-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+ 	}
+	
+	</style>
+	
+	<script>
+		"use strict";
+		window.onload = init;
+		
+		function init(){
+			console.log("init called");
+			
+			// get pointer to <canvas> element on page
+			var canvas = document.getElementById('canvas');
+			
+			// get pointer to "drawing context" and drawing API
+			var ctx = canvas.getContext('2d');
+			
+			ctx.fillRect(300, 300, 300, 300);
+			
+			ctx.clearRect(0, 0,750, 500);
+			
+			//chimney
+			ctx.fillStyle = "gray";
+			ctx.strokeRect(200, 200, 200, 200);
+			ctx.fillRect(175, 90, 50, 110);
+			
+			//roof
+			ctx.fillStyle= "green";
+			ctx.beginPath();
+			ctx.lineWidth = 10;
+			ctx.moveTo(170, 200);
+			ctx.lineTo(430, 200);
+			ctx.lineTo(300, 40);
+			ctx.closePath();
+			ctx.fill();
+			ctx.stroke();
+			
+			// base of the house
+			ctx.strokeStyle = "black";
+			ctx.lineWidth = 10;
+			ctx.fillStyle = "orange";
+			ctx.strokeRect(200, 200, 200, 200);
+			ctx.fillRect(200, 200, 200, 200);
+			
+			ctx.fillStyle= "blue";
+			ctx.lineWidth = 5;
+			ctx.beginPath();
+			ctx.arc(240, 260, 20, 0, Math.PI * 2, false);
+			ctx.closePath();
+			ctx.fill();
+			ctx.stroke();
+			
+			ctx.fillStyle= "blue";
+			ctx.lineWidth = 5;
+			ctx.beginPath();
+			ctx.arc(350, 310, 20, 0, Math.PI * 2, false);
+			ctx.closePath();
+			ctx.fill();
+			ctx.stroke();
+
+		}
+	</script>
+	
+</head>
+<body>
+	<canvas id="canvas" width="750" height="500">
+         Get a browser that supports Canvas!
+      </canvas>
+</body>
+</html>

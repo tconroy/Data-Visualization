@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Thomas Conroy - Random Noise Visualizer - ICE 03</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div class="wrapper">
+		<div class="canvas-container">
+		<h1 id="content-header">Random Noise Visualizer</h1>
+			<ul>
+				<li><button type="button" name="playBtn" class="setting-btn">Stop</button></li>
+				<li><label for="user_fps"><input type="number" name="user_fps" min=1 max=60 value=30> FPS</label></li>
+				<li><label id="elapsed_fps">Elapsed Frames: 0</label></li>
+			</ul>
+			
+			<div class="about">
+				<a href="#" id="aboutBtn">About..</a>
+				<div class="about-inner">
+					<p>This random noise visualizer was made as an experiment in IGME 590-2135-01, Data Visualization. Utilizing the HTML5 Canvas API and random number generation, the population count and color of each individual row / row cell is randomly generated.</p>
+				</div>
+			</div>
+
+			<canvas class="view" width="720" height="480">your browser must support HTML5/Canvas to view this page.</canvas>
+		</div>
+	</div>
+	<footer>by Thomas Conroy</footer>
+
+	<!-- scripts at the bottom since we're working on canvas -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script>if(typeof jQuery === "undefined"){document.write('script src="js/jquery.min.js"><\/script>');}</script>
+	<script src="js/main.js"></script>
+</body>
+</html>

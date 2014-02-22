@@ -1,116 +1,27 @@
-/*****************
-Global Styles
-*****************/
-body {
-	background-color: black;
+p{
+	padding: 5px; 
 }
 
-footer {
-	color: white;
-	text-align: center;
-	font-family: monospace;
-	padding-top:20px;
-
+ol {
+	margin-left:50px;
 }
 
-/*****************
-Wrappers
-*****************/
-/*PAGE CONTAINER*/
+li {
+	list-style: decimal;
+}
+
+section {
+	background-color: white;
+	min-width: 300px;
+	padding-bottom:20px;
+}
+
+section:nth-child(2){
+	background-color: whitesmoke;
+}
+
 .wrapper {
-	/*container around the body element */
+	padding:10px;
 	margin: 0 auto;
-	width: 100%;
-	height: 100%;
-}
-
-div.canvas-container {
-	/*container around canvas element*/
-	margin: 0 auto;
-	margin-top: 20px;
-	width: auto;
-	text-align:center;
-}
-
-.about-inner {
-	display: none;
-	color: white;
-	font-family: monospace;
-	width: 720px;
-	max-width: 720px;
-	margin: 0 auto;
-}
-
-.about-inner p{ 
-	margin-top:10px;
-}
-
-/*****************
-INTERFACE
-*****************/
-.canvas-container ul {
-	/*ul for menu controls*/
-	margin-bottom: 10px;
-}
-.canvas-container ul>li {
-	/*display li horizontally */
-	display: inline;
-	list-style-type: none;
-	padding-right: 20px;
-	vertical-align: middle;
-}
-.canvas-container ul>li>label {
-	font-family: monospace;
-	color: #82B600;
-}
-
-
-.canvas-container ul>li>button {
-	/*change the buttons from block level */
-	display: inline;
-}
-
-
-.setting-btn {
-	/*styles for the buttons */
-	outline: 1px solid #82B600;
-	color: #82B600;
-	font-family: monospace;
-	background-color: black;
-	border-color: black;
-}
-.setting-btn:hover{
-	outline: 1px solid white;
-	cursor: pointer;
-	color: white;
-}
-.setting-btn:active {
-	outline: 1px solid gray;
-	color: gray;
-}
-
-
-
-
-.view {
-	/*the canvas element*/
-	outline: 1px solid #82B600;
-	margin-top:20px;
-}
-/****************
-   ID's
-****************/
-#elapsed_fps {
-	margin-left: 50px;
-}
-
-#content-header {
-	color: white;
-	padding-bottom: 10px;
-}
-
-#aboutBtn {
-	font-family: monospace;
-	color: darkgreen;
-	margin-bottom:10px;
+	width: 80%;
 }

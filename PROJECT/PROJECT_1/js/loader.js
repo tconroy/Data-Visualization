@@ -1,27 +1,35 @@
+    var stage;
+
     $(document).ready(function(){       
         init();
     });
 
     function init() {
 
-        var stage           = new createjs.Stage("localCanvas");
+        stage           = new createjs.Stage("localCanvas");
         stage.canvas.width  = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 20;
         stage.canvas.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 20;
 
         var stageCenterX = stage.canvas.width / 2;
         var stageCenterY = stage.canvas.height / 2;
 
+        // background grid
+        // grid pattern
+        var bgGrid = createBgGrid(6,8);
+        bgGrid.set({alpha:0});
+        stage.addChild(bgGrid);        
+
         // logo icon
         var hexagon = new createjs.Shape();
-        hexagon.addEventListener("click", gotoNextScript);
-        hexagon.graphics
-                   .setStrokeStyle(3,'square','bevel')
-                   .beginStroke('white')
-                   .drawPolyStar(0, 0, 30, 6, 0, -90);
         hexagon.alpha = 0;
         hexagon.x    = stageCenterX;
         hexagon.y    = stageCenterY-150;
         hexagon.regX = hexagon.regY = 0;
+        hexagon.addEventListener("click", gotoNextScript );
+        hexagon.graphics
+           .setStrokeStyle(3,'square','bevel')
+           .beginStroke('white')
+           .drawPolyStar(0, 0, 30, 6, 0, -90);
         
         // ## logo text
         // first half
@@ -61,7 +69,7 @@
                 
                 //after hexagon completes spinning, show success message.
                 var successLoadText = new createjs.Text('DECRYPTING...', '15px Orbitron', '#00CC00');
-                successLoadText.x   = hexagon.x-50;
+                successLoadText.x   = hexagon.x-55;
                 successLoadText.y   = hexagon.y+50;
                 
                 // blink the success message
@@ -88,17 +96,12 @@
                 line2.graphics.lineTo(stage.canvas.width, stage.canvas.height);
                 line2.graphics.endStroke();
 
-                // grid pattern
-                var bgGrid = createBgGrid(stage, 6,8);
-
                 // add new objects to stage
                 stage.addChild(line, line2);
-                stage.addChildAt(bgGrid, 0);
+                bgGrid.set({alpha:0.5});
                 createjs.Tween.get(line).to({x:0, y:stage.canvas.height}, 2000);
                 createjs.Tween.get(line2).to({x:0, y:stage.canvas.height*-1},2000);
-            }).wait(2300).call(function(){
-                stage.removeAllChildren();
-                stage.update();
+            }).wait(4000).call(function(){
                 initDesktop(stage); // call next script
             });
         });
@@ -115,7 +118,7 @@
 
 
 // FUNCTIONS
-    var createBgGrid = function(stage, numX, numY) {
+var createBgGrid = function(numX, numY) {
     
     var grid = new createjs.Container();
     grid.snapToPixel = true;
@@ -129,8 +132,6 @@
     verticalLine.drawRect(0,0,gw * 0.02,gh*(numY+2));
     var vs;
     // placing the vertical lines:
-    // we're placing 1 more than requested
-    // to have seamless scrolling later
     for ( var c = -1; c < numX+1; c++) {
         vs = new createjs.Shape(verticalLine);
         vs.snapToPixel = true;
@@ -144,8 +145,6 @@
     horizontalLine.drawRect(0,0,gw*(numX+1),gh * 0.02);
     var hs;
     // placing the horizontal lines:
-    // we're placing 1 more than requested
-    // to have seamless scrolling later
     for ( c = -1; c < numY+1; c++ ) {
         hs = new createjs.Shape(horizontalLine);
         hs.snapToPixel = true;
@@ -156,9 +155,12 @@
  
     // return the grid-object
     return grid;
+
 };
 
-var gotoNextScript = function(stage){
-    console.dir(e);
+// initiates the next script
+var gotoNextScript = function(){
+    
     initDesktop(stage);
+
 };
